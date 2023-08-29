@@ -6,10 +6,11 @@ import { Container } from "semantic-ui-react";
 
 function PokemonPage() {
   const [pokeData, setPokeData] = useState([])
+  const [search, setSearch] = useState([])
   useEffect(()=>{
     fetch("http://127.0.0.1:3001/pokemon")
       .then(r=>r.json())
-      .then(d=>setPokeData(d))
+      .then(d=>{setPokeData(d);setSearch(d)})
   },[])
   return (
     <Container>
@@ -17,9 +18,9 @@ function PokemonPage() {
       <br />
       <PokemonForm setPokeData={setPokeData} pokeData={pokeData}/>
       <br />
-      <Search />
+      <Search setSearch={setSearch} pokeData={pokeData}/>
       <br />
-      <PokemonCollection pokeData={pokeData}/>
+      <PokemonCollection search={search}/>
     </Container>
   );
 }
